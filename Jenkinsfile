@@ -4,7 +4,7 @@ def sendEmailNotification(stageName, successCheck) {
     emailext (
         subject: "JENKINS NOTIFICATION",
         body: "Stage ${stageName} ${buildStatus}",
-        to: 'doanvanngoctuong@gmail.com', // Update with the appropriate email address
+        to: 'doanvanngoctuong@gmail.com',
         attachLog: true
     )
 }
@@ -15,19 +15,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    // Use a build automation tool (e.g., Maven) to build the code
-                    sh 'mvn clean package'
-                }
+                // Use a build automation tool (e.g., Maven) to build the code
+                sh 'mvn clean install'
             }
         }
         
         stage('Unit and Integration Tests') {
             steps {
-                script {
-                    // Run unit tests and integration tests using test automation tools
-                    sh 'mvn test'
-                }
+                // Run unit tests and integration tests using test automation tools
+                sh 'mvn test'
             }
             post {
                 success {
@@ -41,19 +37,16 @@ pipeline {
 
         stage('Code Analysis') {
             steps {
-                script {
-                    // Integrate a code analysis tool (e.g., SonarQube) to analyze the code
-                    sh 'mvn sonar:sonar'
-                }
+                // Integrate a code analysis tool (e.g., SonarQube) to analyze the code
+                // This step requires proper setup of the code analysis tool and its configuration
+                sh 'mvn sonar:sonar'
             }
         }
         
         stage('Security Scan') {
             steps {
-                script {
-                    // Perform a security scan using a security scanning tool (e.g., OWASP ZAP)
-                    sh 'owasp-zap scan -t http://your-app-url'
-                }
+                // Perform a security scan on the code using a tool such as OWASP Dependency-Check to identify any vulnerabilities
+                sh 'mvn org.owasp:dependency-check-maven:check'
             }
             post {
                 success {
@@ -67,28 +60,23 @@ pipeline {
         
         stage('Deploy to Staging') {
             steps {
-                script {
-                    // Deploy the application to a staging server (e.g., AWS EC2 instance)
-                    sh 'ssh user@staging-server "bash deploy-script.sh"'
-                }
+                // Deploy the application to a staging server such as an AWS EC2 instance
+                sh 'scp target/my-app.war ec2-user@staging-server:/var/lib/tomcat8/webapps/'
             }
         }
         
         stage('Integration Tests on Staging') {
             steps {
-                script {
-                    // Run integration tests on the staging environment
-                    sh 'mvn integration-test'
-                }
+                // Run integration tests on the staging environment
+                // This might involve sending API requests or running tests against the deployed app
+                sh 'mvn integration-test'
             }
         }
         
         stage('Deploy to Production') {
             steps {
-                script {
-                    // Deploy the application to a production server (e.g., AWS EC2 instance)
-                    sh 'ssh user@production-server "bash deploy-script.sh"'
-                }
+                // Deploy the application to a production server such as an AWS EC2 instance
+                sh 'scp target/my-app.war ec2-user@production-server:/var/lib/tomcat8/webapps/'
             }
         }
     }
