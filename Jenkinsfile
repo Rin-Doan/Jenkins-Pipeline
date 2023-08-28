@@ -21,13 +21,13 @@ pipeline {
                     mail to: "doanvanngoctuong@gmail.com",
                     subject: "Unit and Integration Tests",
                     body: "test was successful !!"
-                    attachLog:true
+                    //attachLog:true
                 }
                 failure {
                     mail to: "doanvanngoctuong@gmail.com",
                     subject: "Unit and Integration Tests",
                     body: "test was failure !!"
-                    attachLog:true
+                    //attachLog:true
                 }
             }
         }
@@ -49,13 +49,13 @@ pipeline {
                     mail to: "doanvanngoctuong@gmail.com",
                     subject: "Security Scan",
                     body: "scan was successful !!"
-                    attachLog:true
+                    //attachLog:true
                 }
                 failure {
                     mail to: "doanvanngoctuong@gmail.com",
                     subject: "Security Scan",
                     body: "scan was failure !!"
-                    attachLog:true
+                    //attachLog:true
                 }
             }
         }
