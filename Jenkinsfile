@@ -1,14 +1,3 @@
-def sendEmailNotification(stageName, successCheck) {
-    def buildStatus = successCheck ? 'SUCCESS' : 'FAILURE'
-    
-    emailext (
-        subject: "JENKINS NOTIFICATION",
-        body: "Stage ${stageName} ${buildStatus}",
-        to: 'doanvanngoctuong@gmail.com',
-        attachLog: true
-    )
-}
-
 pipeline {
     agent any
 
