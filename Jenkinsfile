@@ -1,41 +1,85 @@
+def sendEmailNotification(stageName, successCheck) {
+    def buildStatus = successCheck ? 'SUCCESS' : 'FAILURE'
+    
+    emailext (
+        subject: "JENKINS NOTIFICATION",
+        body: "Stage ${stageName} ${buildStatus}",
+        to: 'doanvanngoctuong@gmail.com',
+        attachLog: true
+    )
+}
+
 pipeline {
     agent any
-    environment {
-        DIRECTORY_PATH = "CODE/WEEK5/5.1P"
-        TESTING_ENVIRONMENT = "WEEK_5_TASK_ENVIRONMENT"
-        PRODUCTION_ENVIRONMENT = "RIN"
-    }
+
     stages {
         stage('Build') {
             steps {
-                echo "Fetching the source code from $DIRECTORY_PATH"
-                echo "Compiling the code and generating necessary artifacts"
+                // Use a build automation tool (e.g., Maven) to build the code
+                sh 'mvn clean package'
             }
         }
-        stage('Test') {
+        
+        stage('Unit and Integration Tests') {
             steps {
-                echo "Running unit tests"
-                echo "Running integration tests"
+                // Run unit tests and integration tests using test automation tools
+                sh 'mvn test'
+            }
+            post {
+                success {
+                    sendEmailNotification("Unit and Integration Tests", true)
+                }
+                failure {
+                    sendEmailNotification("Unit and Integration Tests", false)
+                }
             }
         }
-        stage('Code Quality Check') {
+
+        stage('Code Analysis') {
             steps {
-                echo "Checking the quality of the code"
+                // Integrate a code analysis tool (e.g., SonarQube) to analyze the code
+                // This step requires proper setup of the code analysis tool and its configuration
+                sh 'mvn sonar:sonar'
             }
         }
-        stage('Deploy') {
+        
+        stage('Security Scan') {
             steps {
-                echo "Deploying the application to $TESTING_ENVIRONMENT"
+                // Perform a security scan using a security scanning tool (e.g., OWASP ZAP)
+                // This step requires proper setup of the security scanning tool
+                sh 'owasp-zap scan -t http://your-app-url'
+            }
+            post {
+                success {
+                    sendEmailNotification("Security Scan", true)
+                }
+                failure {
+                    sendEmailNotification("Security Scan", false)
+                }
             }
         }
-        stage('Approval') {
+        
+        stage('Deploy to Staging') {
             steps {
-                sleep(time: 10, unit: 'SECONDS')
+                // Deploy the application to a staging server (e.g., AWS EC2 instance)
+                // This step requires proper deployment configuration
+                sh 'ssh user@staging-server "bash deploy-script.sh"'
             }
         }
+        
+        stage('Integration Tests on Staging') {
+            steps {
+                // Run integration tests on the staging environment
+                // This might involve sending API requests or running tests against the deployed app
+                sh 'mvn integration-test'
+            }
+        }
+        
         stage('Deploy to Production') {
             steps {
-                echo "Deploying the code to $PRODUCTION_ENVIRONMENT"
+                // Deploy the application to a production server (e.g., AWS EC2 instance)
+                // This step requires proper deployment configuration
+                sh 'ssh user@production-server "bash deploy-script.sh"'
             }
         }
     }
