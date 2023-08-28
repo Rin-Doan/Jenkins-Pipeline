@@ -18,16 +18,10 @@ pipeline {
             }
             post {
                 success {
-                    emailext to: "doanvanngoctuong@gmail.com",
-                    subject: "Unit and Integration Tests",
-                    body: "test was successful !!"
-                    attachLog:true
+                    emailext attachLog: true, body: 'test was successful !!', subject: 'Unit and Integration Tests', to: 'doanvanngoctuong@gmail.com'
                 }
                 failure {
-                    emailext to: "doanvanngoctuong@gmail.com",
-                    subject: "Unit and Integration Tests",
-                    body: "test was failure !!"
-                    attachLog:true
+                    emailext attachLog: true, body: 'test was fail !!', subject: 'Unit and Integration Tests', to: 'doanvanngoctuong@gmail.com'
                 }
             }
         }
@@ -46,16 +40,10 @@ pipeline {
             }
             post {
                 success {
-                    emailext to: "doanvanngoctuong@gmail.com",
-                    subject: "Security Scan",
-                    body: "scan was successful !!"
-                    attachLog:true
+                    emailext attachLog: true, body: 'scan was successful !!', subject: 'Security Scan', to: 'doanvanngoctuong@gmail.com'
                 }
                 failure {
-                    emailext to: "doanvanngoctuong@gmail.com",
-                    subject: "Security Scan",
-                    body: "scan was failure !!"
-                    attachLog:true
+                    emailext attachLog: true, body: 'scan was fail !!', subject: 'Security Scan', to: 'doanvanngoctuong@gmail.com'
                 }
             }
         }
