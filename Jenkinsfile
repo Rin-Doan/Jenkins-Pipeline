@@ -18,13 +18,13 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "doanvanngoctuong@gmail.com"
-                    subject: "UNIT AND INTEGRATION TESTS"
+                    mail to: "doanvanngoctuong@gmail.com",
+                    subject: "UNIT AND INTEGRATION TESTS",
                     body: "build was successful!!"
                 }
                 failure {
-                    mail to: "doanvanngoctuong@gmail.com"
-                    subject: "UNIT AND INTEGRATION TESTS"
+                    mail to: "doanvanngoctuong@gmail.com",
+                    subject: "UNIT AND INTEGRATION TESTS",
                     body: "build was fail !!"
                 }
             }
@@ -44,13 +44,13 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "doanvanngoctuong@gmail.com"
-                    subject: "SECURITY SCAN"
+                    mail to: "doanvanngoctuong@gmail.com",
+                    subject: "SECURITY SCAN",
                     body: "build was successful!!"
                 }
                 failure {
-                    mail to: "doanvanngoctuong@gmail.com"
-                    subject: "SECURITY SCAN"
+                    mail to: "doanvanngoctuong@gmail.com",
+                    subject: "SECURITY SCAN",
                     body: "build was fail !!"
                 }
             }
