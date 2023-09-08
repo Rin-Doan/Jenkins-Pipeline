@@ -18,10 +18,14 @@ pipeline {
             }
             post {
                 success {
-                    emailext (attachLog: true, body: 'test was successful !!', subject: 'Unit and Integration Tests', to: 'doanvanngoctuong@gmail.com')
+                    mail to: "doanvanngoctuong@gmail.com"
+                    subject: "UNIT AND INTEGRATION TESTS"
+                    body: "build was successful!!"
                 }
                 failure {
-                    emailext (attachLog: true, body: 'test was fail !!', subject: 'Unit and Integration Tests', to: 'doanvanngoctuong@gmail.com')
+                    mail to: "doanvanngoctuong@gmail.com"
+                    subject: "UNIT AND INTEGRATION TESTS"
+                    body: "build was fail !!"
                 }
             }
         }
@@ -40,10 +44,14 @@ pipeline {
             }
             post {
                 success {
-                    emailext (attachLog: true, body: 'scan was successful !!', subject: 'Security Scan', to: 'doanvanngoctuong@gmail.com')
+                    mail to: "doanvanngoctuong@gmail.com"
+                    subject: "SECURITY SCAN"
+                    body: "build was successful!!"
                 }
                 failure {
-                    emailext (attachLog: true, body: 'scan was fail !!', subject: 'Security Scan', to: 'doanvanngoctuong@gmail.com')
+                    mail to: "doanvanngoctuong@gmail.com"
+                    subject: "SECURITY SCAN"
+                    body: "build was fail !!"
                 }
             }
         }
