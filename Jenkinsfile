@@ -6,7 +6,7 @@ pipeline {
             steps {
                 // Use a build automation tool (e.g., Maven) to build the code
                 echo"DESCRIPTION: Build the code using a build automation tool to compile and package your code"
-                echo"TOOL: Using Maven as a build automation tool"
+                echo"TOOL: Using Maven as a build tool"
             }
         }
         
